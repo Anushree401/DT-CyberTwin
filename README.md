@@ -2,305 +2,714 @@
 
 > **What happens to the system after a successful attack?**
 
-Most security validation platforms answer whether an attacker **can** compromise a system.
+Traditional cybersecurity validation can tell us whether an attack path is possible, whether a vulnerability can be exploited, or whether security controls can stop an attacker.
 
-DT-CyberTwin asks what happens **after they do**.
+But it often stops at:
 
-It is a stateful **Cyber-Physical Digital Twin** that models how an attack evolves through interconnected systems, how system state changes over time, and how a cyber compromise can propagate into operational and physical consequences.
+**“The attacker successfully compromised the system.”**
 
-```mermaid
-flowchart LR
-    A[Cyber Attack] --> B[Compromise]
-    B --> C[State Change]
-    C --> D[Propagation]
-    D --> E[Control System Impact]
-    E --> F[Physical Consequence]
-    F --> G[Operational Impact]
-    G --> H[Recovery / What-if]
-```
+DT-CyberTwin asks the next question:
 
----
-
-## The Gap
-
-Traditional security validation can establish:
-
-```mermaid
-flowchart LR
-    A[Attacker] --> B[Initial Access]
-    B --> C[Lateral Movement]
-    C --> D[Compromise]
-    D --> E[Exposure Validated]
-```
-
-But the system does not stop when the attack path is validated.
-
-DT-CyberTwin continues the simulation:
-
-```mermaid
-flowchart LR
-    A[Attacker] --> B[Initial Access]
-    B --> C[Lateral Movement]
-    C --> D[Controller Compromise]
-    D --> E[Signal Corruption]
-    E --> F[Incorrect Control]
-    F --> G[Actuator Response]
-    G --> H[Physical Consequence]
-    H --> I[Operational Impact]
-```
-
-The focus shifts from:
-
-> **Can the attack happen?**
-
-to:
-
-> **How will the system evolve if it happens?**
+**“What happens to the system after that?”**
 
 ---
 
 ## What is DT-CyberTwin?
 
-DT-CyberTwin maintains a continuously evolving digital representation of a cyber-physical environment.
+**DT-CyberTwin** is a stateful cyber-physical digital twin designed to simulate how successful cyberattacks evolve through a system and how those attacks affect its **operational, cyber, and physical state over time**.
 
-It combines:
-
-* **Stateful Digital Twin** — represents devices, services, controllers, sensors, actuators, and their current states.
-* **Attack Simulation** — models attacks as evolving events rather than isolated vulnerabilities.
-* **Dependency Graph** — captures relationships and propagation paths between components.
-* **CPS Modeling** — connects cyber events to sensor, controller, actuator, and physical-system behavior.
-* **Impact Propagation** — models cascading degradation across the system.
-* **Causal Replay** — reconstructs how and why the system reached a particular state.
-* **Adaptive Intelligence** — enables attacker, defender, and environment behavior to evolve with system state.
-
-```mermaid
-flowchart TB
-    A[System Model] --> B[Digital Twin]
-    B --> C[State Engine]
-    C --> D[Simulation Engine]
-
-    D --> E[Attacker]
-    D --> F[Defender]
-    D --> G[Environment]
-
-    E --> D
-    F --> D
-    G --> D
-
-    D --> H[Impact Propagation]
-    H --> I[CPS Model]
-    I --> J[Operational & Physical Consequences]
-
-    D --> K[Causal Replay]
-    K --> L[Counterfactual Analysis]
-```
-
----
-
-## A System That Evolves
-
-The core of DT-CyberTwin is a **time-evolving system state**.
-
-```mermaid
-sequenceDiagram
-    participant A as Attacker
-    participant T as Digital Twin
-    participant C as Controller
-    participant P as Physical System
-
-    A->>T: Compromise component
-    T->>T: Update system state
-    T->>C: Propagate cyber impact
-    C->>P: Incorrect control decision
-    P->>T: Physical state changes
-    T->>T: Recalculate system state
-    T->>A: Updated environment
-```
-
-At every simulation step:
-
-```text
-state(t+1) = f(
-    state(t),
-    agent actions,
-    system conditions
-)
-```
-
-This allows DT-CyberTwin to model not only **where an attacker can go**, but **what the system becomes as a consequence**.
-
----
-
-## Example
-
-Consider a simple industrial temperature-control system:
+Instead of treating an attack as a static attack path, DT-CyberTwin maintains a continuously evolving representation of the system.
 
 ```mermaid
 flowchart LR
-    S[Temperature Sensor] --> C[Controller / PLC]
+    A[Cyber System] <--> B[DT-CyberTwin State]
+    B <--> C[Physical System]
+
+    D[Attack Events] --> B
+    B --> E[Impact Propagation]
+    E --> F[Operational / Physical Consequences]
+    F --> B
+```
+
+The goal is to move from:
+
+**Attack Validation**
+
+to:
+
+**Attack → State Evolution → Impact → Consequence → Recovery**
+
+---
+
+# The Problem
+
+Existing security assessment approaches can identify things such as:
+
+* attack paths
+* exploitable vulnerabilities
+* initial access
+* lateral movement
+* privilege escalation
+* control effectiveness
+
+But successful compromise does not necessarily represent the final consequence.
+
+For example:
+
+```text
+Attacker
+   ↓
+Initial Access
+   ↓
+Lateral Movement
+   ↓
+PLC Compromise
+```
+
+A traditional security validation may stop here.
+
+DT-CyberTwin continues the simulation:
+
+```text
+PLC Compromise
+      ↓
+Sensor Manipulation
+      ↓
+Incorrect Controller Input
+      ↓
+Incorrect Actuator Command
+      ↓
+Physical Process Deviation
+      ↓
+Operational Impact
+```
+
+This makes the **post-compromise evolution of the system** the central problem.
+
+---
+
+# Core Idea
+
+DT-CyberTwin combines:
+
+* Stateful Digital Twin
+* Dependency Graph
+* Cyberattack Simulation
+* CPS Modeling
+* Time-Evolving State
+* Impact Propagation
+* Causal Replay
+* Adaptive Intelligence
+
+into a single simulation environment.
+
+```mermaid
+flowchart TB
+
+    A[Attack Scenario] --> B[Attack Engine]
+
+    B --> C[Digital Twin State]
+
+    C --> D[Dependency Graph]
+    C --> E[CPS State]
+
+    E --> F[Sensor]
+    F --> G[Controller / PLC]
+    G --> H[Actuator]
+    H --> I[Physical Process]
+    I --> F
+
+    D --> J[Impact Propagation]
+    E --> J
+
+    J --> K[System Consequences]
+
+    C --> L[Causal Replay]
+    K --> L
+```
+
+---
+
+# Digital Twin Architecture
+
+The digital twin represents both the **cyber system** and the **physical/control system**.
+
+```mermaid
+flowchart LR
+
+    subgraph CYBER["Cyber Layer"]
+        U[User / Operator]
+        W[Workstation]
+        G[Gateway]
+        P[PLC / Controller]
+    end
+
+    subgraph CPS["Cyber-Physical Layer"]
+        S[Sensor]
+        C[Controller]
+        A[Actuator]
+        PR[Physical Process]
+    end
+
+    U --> W
+    W --> G
+    G --> P
+
+    S --> C
+    C --> A
+    A --> PR
+    PR --> S
+
+    P --> C
+```
+
+Every important component can maintain state.
+
+Example:
+
+```text
+Node State
+
+workstation:
+    compromised = true
+    privilege = user
+
+plc:
+    compromised = true
+    privilege = admin
+
+sensor:
+    true_value = 80
+    reported_value = 120
+
+controller:
+    target = 100
+    status = unstable
+
+actuator:
+    command = HIGH
+    status = active
+```
+
+---
+
+# Cyber-Physical Feedback Loop
+
+The CPS model is a core part of the simulation rather than a separate module.
+
+```mermaid
+flowchart LR
+
+    S[Sensor] --> C[Controller / PLC]
     C --> A[Actuator]
     A --> P[Physical Process]
     P --> S
 
-    N[Network] -. Cyber Attack .-> S
-    N -. Cyber Attack .-> C
+    X[Cyber Attack] --> S
+    X --> C
+    X --> A
+```
+
+A cyber event can therefore change the physical behavior of the simulated system.
+
+For example:
+
+```text
+Sensor Spoofing
+      ↓
+Incorrect Temperature Reading
+      ↓
+Controller Calculates Incorrect Action
+      ↓
+Heater Receives Incorrect Command
+      ↓
+Temperature Deviates
+      ↓
+Physical / Operational Impact
+```
+
+---
+
+# Time-Evolving Simulation
+
+DT-CyberTwin models the system as a sequence of state transitions.
+
+```text
+State(t+1) =
+    f(
+        State(t),
+        Agent Actions,
+        System Conditions,
+        CPS Dynamics
+    )
+```
+
+The simulation advances through discrete time steps.
+
+```mermaid
+flowchart LR
+
+    A[State t] --> B[Events / Attacks]
+    B --> C[Agent Actions]
+    C --> D[CPS Dynamics]
+    D --> E[Impact Propagation]
+    E --> F[State t+1]
+    F --> A
+```
+
+This allows the system to represent:
+
+* compromise progression
+* changing privileges
+* changing network conditions
+* sensor manipulation
+* controller behavior
+* actuator response
+* physical deviation
+* cascading dependencies
+* recovery
+
+---
+
+# Dependency Graph
+
+The digital twin represents system dependencies as a graph.
+
+```mermaid
+graph TD
+
+    USER[Operator]
+    PC[Workstation]
+    GW[Gateway]
+    PLC[PLC]
+    SENSOR[Temperature Sensor]
+    CTRL[Controller]
+    ACT[Heater Actuator]
+    PROC[Physical Process]
+
+    USER --> PC
+    PC --> GW
+    GW --> PLC
+
+    SENSOR --> CTRL
+    CTRL --> ACT
+    ACT --> PROC
+    PROC --> SENSOR
+```
+
+Each node and edge can contain relevant state and metadata.
+
+Examples include:
+
+```text
+Node
+├── type
+├── status
+├── compromised
+├── privilege
+├── vulnerability
+├── telemetry
+└── physical_state
+
+Edge
+├── dependency
+├── communication
+├── latency
+└── reliability
+```
+
+---
+
+# Attack Simulation
+
+The initial implementation uses deterministic, rule-based attack scenarios.
+
+Example:
+
+```text
+1. Compromise workstation
+2. Move through gateway
+3. Compromise PLC
+4. Manipulate sensor telemetry
+5. Trigger incorrect control action
+6. Observe physical deviation
+7. Measure operational impact
+```
+
+The attack engine changes the digital twin rather than simply producing an attack-path report.
+
+```mermaid
+flowchart TD
+
+    A[Attack Action] --> B{Target State}
+    B --> C[State Transition]
+    C --> D[Digital Twin]
+    D --> E[CPS Response]
+    E --> F[Impact]
+    F --> G[Next Simulation Step]
+```
+
+---
+
+# Impact Propagation
+
+The important output is not simply whether a node was compromised.
+
+DT-CyberTwin tracks how compromise propagates through system dependencies.
+
+```mermaid
+flowchart LR
+
+    A[Compromised Node]
+    --> B[Dependency Effect]
+    --> C[Component Degradation]
+    --> D[System Impact]
+    --> E[Physical Consequence]
+```
+
+Possible measurements include:
+
+| Layer       | Example                                         |
+| ----------- | ----------------------------------------------- |
+| Cyber       | compromised nodes, privilege changes            |
+| Network     | latency, packet loss, communication degradation |
+| Control     | controller instability, incorrect commands      |
+| Physical    | temperature/process deviation                   |
+| Operational | production delay, service degradation           |
+| Recovery    | time to restore stable operation                |
+
+---
+
+# Causal Replay
+
+Every simulation step can produce an event and state transition.
+
+```text
+t=0
+Normal System
+
+t=1
+Workstation compromised
+
+t=2
+Gateway accessed
+
+t=3
+PLC compromised
+
+t=4
+Sensor telemetry manipulated
+
+t=5
+Controller response changes
+
+t=6
+Actuator command changes
+
+t=7
+Physical process deviates
+```
+
+This creates a causal timeline that can be replayed.
+
+```mermaid
+flowchart LR
+
+    A[Event t0] --> B[State Change t1]
+    B --> C[Event t1]
+    C --> D[State Change t2]
+    D --> E[Event t2]
+    E --> F[Physical / Operational Impact]
+```
+
+The replay layer is intended to make the simulation explainable rather than producing only a final score.
+
+---
+
+# Example Scenario
+
+Consider a simplified industrial temperature-control system.
+
+```mermaid
+flowchart LR
+
+    S[Temperature Sensor]
+    --> PLC[PLC / Controller]
+    --> H[Heater]
+    --> T[Temperature Process]
+    --> S
 ```
 
 Under normal conditions:
 
 ```text
-Sensor → Controller → Actuator → Physical Process
-                    ↑
-                 Feedback
+Sensor → Controller → Heater → Temperature → Sensor
 ```
 
-Now suppose the sensor telemetry is manipulated.
+After sensor compromise:
 
-```mermaid
-flowchart LR
-    A[True Temperature] --> B[Sensor]
-    B --> C[Manipulated Telemetry]
-    C --> D[Controller]
-    D --> E[Incorrect Actuation]
-    E --> F[Physical Deviation]
+```text
+Real Temperature
+      ↓
+Sensor Manipulation
+      ↓
+False Temperature
+      ↓
+Controller
+      ↓
+Incorrect Heater Command
+      ↓
+Temperature Deviation
 ```
 
-DT-CyberTwin follows the entire chain:
-
-**Cyber event → state transition → control response → physical consequence → operational impact**
+DT-CyberTwin can therefore simulate not only **which component was compromised**, but also **what happened to the system because of that compromise**.
 
 ---
 
-## Architecture
+# Architecture
 
 ```mermaid
 flowchart TB
-    subgraph Input["System Definition"]
-        A[Topology]
-        B[Component States]
-        C[Vulnerabilities]
-        D[System Conditions]
+
+    subgraph INPUT["Scenario Input"]
+        A[System Topology]
+        B[Initial State]
+        C[Attack Scenario]
+        D[CPS Parameters]
     end
 
-    subgraph Twin["DT-CyberTwin Core"]
-        E[Digital Twin]
+    subgraph CORE["DT-CyberTwin Core"]
+        E[Digital Twin Graph]
         F[State Engine]
-        G[Dependency Graph]
-        H[Simulation Engine]
+        G[Attack Engine]
+        H[CPS Simulation]
+        I[Impact Propagation]
+        J[Event / Replay Engine]
     end
 
-    subgraph Intelligence["Adaptive Intelligence"]
-        I[Attacker Agent]
-        J[Defender Agent]
-        K[Environment Agent]
+    subgraph OUTPUT["Simulation Output"]
+        K[State Timeline]
+        L[Attack Evolution]
+        M[Operational Impact]
+        N[Physical Consequences]
+        O[Recovery Scenario]
     end
 
-    subgraph CPS["Cyber-Physical Layer"]
-        L[Sensor]
-        M[Controller]
-        N[Actuator]
-        O[Physical Process]
-    end
+    A --> E
+    B --> F
+    C --> G
+    D --> H
 
-    subgraph Analysis["Analysis"]
-        P[Impact Propagation]
-        Q[Causal Replay]
-        R[Counterfactual Analysis]
-    end
-
-    Input --> E
     E --> F
-    E --> G
+    G --> F
     F --> H
-    G --> H
-
-    I --> H
-    J --> H
-    K --> H
     H --> I
-    H --> J
-    H --> K
+    I --> F
+    F --> J
 
-    H --> L
-    L --> M
-    M --> N
-    N --> O
-    O --> L
-
-    H --> P
-    P --> Q
-    Q --> R
+    J --> K
+    J --> L
+    I --> M
+    I --> N
+    F --> O
 ```
 
 ---
 
-## What We Measure
+# Technology Stack
 
-DT-CyberTwin moves beyond a simple exposure result.
+## Current MVP
 
-The simulation can track:
+| Layer           | Technology                  | Purpose                                |
+| --------------- | --------------------------- | -------------------------------------- |
+| Language        | Python 3.12+                | Backend + simulation                   |
+| API             | FastAPI                     | Backend API                            |
+| Validation      | Pydantic v2                 | State/event/scenario models            |
+| Graph           | NetworkX                    | Digital twin dependency graph          |
+| State           | Custom state engine         | Time-evolving system state             |
+| CPS             | Custom Python models        | Sensor/controller/actuator/process     |
+| Dynamics        | Custom discrete-time models | Physical/process evolution             |
+| Simulation      | Custom simulation engine    | Main simulation loop                   |
+| Attack Modeling | Rule-based engine           | Attack actions and transitions         |
+| Impact          | Custom propagation engine   | Cyber → operational → physical effects |
+| Replay          | Event/state history         | Causal replay                          |
+| Storage         | JSON                        | Initial scenarios and state            |
+| Testing         | pytest                      | Unit/integration testing               |
+| Environment     | uv / venv                   | Python environment                     |
+| Version Control | Git / GitHub                | Source control                         |
 
-| Layer       | Example State                              |
-| ----------- | ------------------------------------------ |
-| Cyber       | compromise, privilege, connectivity        |
-| Network     | latency, packet loss, availability         |
-| System      | service degradation, dependency failures   |
-| Control     | sensor deviation, controller instability   |
-| Physical    | temperature, pressure, process deviation   |
-| Operational | downtime, degraded functionality, recovery |
+## Planned Infrastructure
+
+| Technology            | Purpose                                      |
+| --------------------- | -------------------------------------------- |
+| PostgreSQL            | Persistent application/scenario data         |
+| Neo4j                 | Large-scale dependency/topology graphs       |
+| TimescaleDB           | Time-series telemetry                        |
+| Redis                 | Real-time simulation state / pub-sub         |
+| Next.js               | Web dashboard                                |
+| React Flow            | Interactive digital-twin graph               |
+| Recharts              | Telemetry and impact visualization           |
+| WebSockets            | Live simulation updates                      |
+| Agent / RL frameworks | Adaptive attacker/defender behavior          |
+| ML models             | Anomaly detection and probabilistic behavior |
 
 ---
 
-## The Core Idea
+# Project Structure
+
+```text
+backend/
+│
+├── models/
+│   ├── node.py
+│   ├── edge.py
+│   ├── state.py
+│   └── event.py
+│
+├── twin/
+│   ├── graph.py
+│   └── state_engine.py
+│
+├── cps/
+│   ├── sensor.py
+│   ├── controller.py
+│   ├── actuator.py
+│   ├── process.py
+│   └── dynamics.py
+│
+├── simulation/
+│   ├── engine.py
+│   └── scheduler.py
+│
+├── attacks/
+│   └── rules.py
+│
+├── impact/
+│   ├── propagation.py
+│   └── metrics.py
+│
+├── replay/
+│   └── timeline.py
+│
+└── main.py
+```
+
+---
+
+# Design Principle
+
+The simulation engine should remain **deterministic, inspectable, and testable**.
+
+Intelligent agents can operate on top of the simulation rather than replacing the underlying system model.
 
 ```mermaid
-flowchart LR
-    A["Attack Simulation"] --> B["+ Stateful Digital Twin"]
-    B --> C["+ Dependency Graph"]
-    C --> D["+ CPS Model"]
-    D --> E["+ Impact Propagation"]
-    E --> F["System Consequences"]
+flowchart TB
+
+    A[Digital Twin]
+    B[Simulation Engine]
+    C[CPS Dynamics]
+    D[Impact Engine]
+
+    A --> B
+    B --> C
+    C --> D
+
+    E[Attacker Agent] --> B
+    F[Defender Agent] --> B
+    G[Environment Agent] --> B
 ```
 
-**DT-CyberTwin is not just asking whether a system can be breached.**
-
-It asks:
-
-> **Once the breach occurs, how does the system evolve?**
+This keeps the system explainable while allowing adaptive intelligence to be added later.
 
 ---
 
-## Project Status
+# Development Roadmap
 
-DT-CyberTwin is being developed as a research and competition prototype for **Digital Twins and Cyber-Physical Systems**, with the initial implementation focused on synthetic CPS environments and state-based simulation.
+```text
+Phase 1
+├── Domain models
+├── Digital twin graph
+└── Initial system state
 
-The initial development path is:
+Phase 2
+├── State evolution
+├── Simulation loop
+└── Event scheduler
 
-```mermaid
-flowchart LR
-    A[Digital Twin Core] --> B[State Evolution]
-    B --> C[Attack Simulation]
-    C --> D[CPS Model]
-    D --> E[Impact Propagation]
-    E --> F[Causal Replay]
-    F --> G[Adaptive Agents]
-    G --> H[Counterfactual Analysis]
+Phase 3
+├── CPS model
+├── Sensor
+├── Controller
+├── Actuator
+└── Physical process
+
+Phase 4
+├── Attack rules
+├── Attack progression
+└── State transitions
+
+Phase 5
+├── Impact propagation
+├── Operational metrics
+├── Physical consequences
+└── Recovery
+
+Phase 6
+├── Causal replay
+└── Timeline visualization
+
+Phase 7
+├── Attacker agent
+├── Defender agent
+└── Adaptive scenarios
+
+Phase 8
+├── Web dashboard
+├── Real-time simulation
+└── Interactive digital twin
 ```
 
 ---
 
-## Vision
+# Core Research Direction
 
-Security validation should not end at **"compromised."**
+DT-CyberTwin is intended to explore how a cyber-physical system evolves **after successful compromise**.
 
-DT-CyberTwin aims to bridge the gap between:
+The research direction focuses on:
 
-**attack validation**
+* stateful cyber-physical representation
+* time-evolving attack scenarios
+* cyber-physical interaction
+* dependency-based impact propagation
+* adaptive attack behavior
+* causal explanation and replay
+* operational and physical consequence prediction
+* counterfactual recovery analysis
 
-and
+---
 
-**system-level consequence understanding.**
+# Vision
 
-> **Simulate the attack.
-> Evolve the system.
-> Understand the consequence.**
+Traditional security assessment asks:
+
+> **Can the attacker compromise the system?**
+
+DT-CyberTwin asks:
+
+> **What happens to the system after the attacker succeeds?**
+
+The long-term goal is to create a digital twin capable of connecting:
+
+**Cyber Events → System State → Control Behavior → Physical Response → Operational Impact**
+
+rather than treating cybersecurity as an isolated collection of vulnerabilities and attack paths.
+
+---
+
+## Status
+
+**Current focus:** Building the deterministic MVP simulation core.
+
+**Primary target:** A working cyber-physical vertical slice demonstrating successful compromise and its evolution into measurable operational and physical consequences.
+
+**Future direction:** Adaptive multi-agent simulation, real-time telemetry, counterfactual analysis, and interactive digital-twin visualization.
