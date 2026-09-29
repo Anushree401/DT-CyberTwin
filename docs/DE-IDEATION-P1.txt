@@ -1,0 +1,262 @@
+https://www.zotero.org/
+
+https://ns3simulation.com/network-simulation-software-list/
+https://aws.amazon.com/security-agent/?trk=c7bead05-c8d7-43aa-88b1-1c8faa1b5c49&sc_channel=ps&trk=624522eb-7b74-4623-b50b-12a12eff8837&sc_channel=ps&ef_id=CjwKCAjwuuPRBhAnEiwA2Ji8esWlMO9P15XZFDqdnO440DlQ0Nie0MUaWzzmofKf1ttzBCi4LyqYuBoCuzUQAvD_BwE:G:s&s_kwcid=AL!4422!3!812204788732!p!!g!!threat%20modeling%20tool!23846236451!200881313001&gad_campaignid=23846236451&gbraid=0AAAAADjHtp8N19Ko2UX_Iz900Jr6ynpmm&gclid=CjwKCAjwuuPRBhAnEiwA2Ji8esWlMO9P15XZFDqdnO440DlQ0Nie0MUaWzzmofKf1ttzBCi4LyqYuBoCuzUQAvD_BwE
+https://try.orca.security/Vulnerability-Management.html?creative=678478284878&keyword=cloud%20vulnerability%20scanner&matchtype=b&network=g&device=c&cq_src=google_ads&cq_cmp=16884011641&cq_term=cloud%20vulnerability%20scanner&cq_plac=&cq_net=g&cq_plt=gp&utm_source=google&utm_medium=cpc&utm_campaign=25-nb-generic-apac&utm_term=cloud%20vulnerability%20scanner&utm_content=678478284878&gad_source=1&gad_campaignid=16884011641&gbraid=0AAAAACbsX_DxV511sPLz45BO3WXQcuP5A&gclid=CjwKCAjwuuPRBhAnEiwA2Ji8eoAk8nnecYmUAigOtHsXAdEvCcCR1BRxSFnOcP5pCnGYTgVWORQ__RoC_MIQAvD_BwE
+https://www.picussecurity.com/breach-and-attack-simulation
+https://n8n.io/?ps_partner_key=YTc3OGRiMWRmYzI5&sid1=3608958687&ps_xid=0JHdvi2CsCUPXD&gsxid=0JHdvi2CsCUPXD&gspk=YTc3OGRiMWRmYzI5&gad_source=1
+
+stateful twin of network systems
+https://www.mdpi.com/2079-9292/15/10/1995
+https://flink.apache.org/2020/08/18/monitoring-and-controlling-networks-of-iot-devices-with-flink-stateful-functions/
+
+multi-agent simulation for computer networks
+https://www.sciencedirect.com/topics/computer-science/multiagent-simulation
+https://mas.cs.umass.edu/research_old/mass/
+https://www.researchgate.net/publication/389990166_A_Multi-Agent_Monitoring_System_for_Computer_Networks
+
+cyber + physical coupling (CPS) in computer networks
+https://ieeexplore.ieee.org/document/6736601
+https://www.sciencedirect.com/science/article/pii/S0142061522003416
+
+https://www.google.com/search?q=do+current+network+simulation+softwares+and+breach+and+attack+simulations+do+Attack+%E2%86%92+Consequence+Replay+Engine%3F&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCTI1MjMwajBqN6gCALACAA&sourceid=chrome&ie=UTF-8&udm=50&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cY2oODYyTyZk24Xz37_7FQzIy1akcLNTbXV40dDKOsn8wE-kYDfut0KKLXCaf2fwO7Scv5zCZgUsLvm6pQ7pLskFx5e9cF5Te1jGDBQyXh-vhO4-tPUWz-TqzJskyQpmmUztVJoU0FnZBNaRPO4J3DFy6K8M1Ck2qiNlSXJkHEAgiS1SYDwDt_R3jjC-FKhb0ZYsc2g&aep=10&ntc=1&mstk=AUtExfDGWuXCbxkUwSaRBYos0SjDkDfWAHeBMPhiZ73G_yXr-9LLf9cUGAOG4wV1wLjFqO1GrIZaKjQZo1ovJwY8AzJ95jzqKcGTSy9Apt22EqcCkNBBS8-tZT2x02Dnz08mV6D-hwcNLNIg4P_Js7NJ0FFeVQuj2UmQj6jUIdGAuRJfpUgGj550s71xrhnSUq_zJAVglKstWjXZ-kAImBnc_OXpya6YnEojEKOVE4Asg36pZn_1nuJ21_qqoohVg20SnmhyLq10o8F5F1GOiMLoN9CXCvOxUr0maWf1ksd6dRvSsKHr1_GBjiQFykEdLB3gO9cigw98CTY6M5RwtBQSY-zQnmBnDfY3Q572oTRqtCet_rSI11oR1ZOjUxBi2TwDGMDzPuo0oXgEliceb5Hoh3bVEt98tbVmDwHJ4ISruOFIrd0f4ZvTDu5G6fdKRUy6RXMVs_VytBo&aioh=3&csuir=1&mtid=DCE6aqm4LJKaseMP_--3KA
+
+
+Input: system + time + behavior
+↓
+Simulate evolving state
+↓
+Agents interact (attack/defense)
+↓
+Output: how system changes + consequences
+https://share.google/aimode/eL8In2FG6lzXnXxHI
+https://share.google/aimode/nJi7FciMPcis5Aj3L
+
+what we can change here:
+"simulate uncertainty"
+agent that creates simulation scenario and updates state basis current state 
+"Continuous Breach and Attack Simulation (CBAS)"
+https://www.sciencedirect.com/org/science/article/pii/S1546221825002917
+https://www.immuniweb.com/use-cases/continuous-breach-and-attack-simulation/  -- STANDARD CBAS ARCHITECTURE 
+"Adversarial Exposure Validation (AEV)" -- imp too 
+https://www.picussecurity.com/use-case/adversarial-exposure-validation
+	Picus Security Validation Platform
+	Exposure Validation
+	Security Control Validation
+	Attack Surface Validation
+	Cloud Security Validation
+	Attack Path Validation
+	Detection Rule Validation
+https://share.google/aimode/jAkXpAMb1iAGkpchr
+"What happens to the system after compromise?"
+AEV stops here
+Attacker
+↓
+Initial Access
+↓
+Lateral Movement
+↓
+Domain Admin
+↓
+Validated
+Your system continues
+Attacker
+↓
+Initial Access
+↓
+Lateral Movement
+↓
+Domain Admin
+↓
+ERP slowdown
+↓
+Manufacturing delay
+↓
+Business impact
+If you add CPS
+Attacker
+↓
+Controller compromise
+↓
+Signal corruption
+↓
+Actuator response
+↓
+Physical consequence
+BUILD
+Attack Simulation Engine
+          +
+Stateful Digital Twin
+          +
+Dependency Graph
+          +
+Control System Model
+          +
+Impact Propagation Engine
+Current vendors output:
+	Exposure Score
+	Attack Path
+	Control Effectiveness
+Your system outputs:
+	Operational Impact
+	System Degradation
+	Control Instability
+	Physical Consequences
+	Recovery Scenarios
+"A stateful cyber-physical digital twin that predicts and visualizes the operational consequences of validated attack paths."
+
+
+
+feasibility
+
+*Graph-based twin
+Very practical
+Used in industry already
+You can build this with:
+NetworkX / Neo4j / Postgres
+
+*Basic state evolution
+Practical
+Simple variable updates + transitions
+
+*Multi-agent simulation
+Practical but tricky
+Needs:
+well-defined rules
+not overcomplicated logic
+
+*Network simulation (ns-3 level) !!!!
+Heavy
+C++ based
+steep learning curve
+
+*Continuous-time + real dynamics !!!!
+possible
+but overkill early
+
+
+
+KIND OF DATA 
+
+1. topology data: "what exists"
+sth like:
+{
+  "nodes": [
+    {"id": "user_pc", "type": "endpoint"},
+    {"id": "server_a", "type": "server"},
+    {"id": "controller_1", "type": "controller"}
+  ],
+  "edges": [
+    {"from": "user_pc", "to": "server_a", "protocol": "ssh"},
+    {"from": "controller_1", "to": "actuator_1", "type": "control"}
+  ]
+}
+sources:
+manually defined (MVP)
+network scans (later)
+cloud configs (future)
+
+2. state data (dynamic properties): "what is happening right now"
+Cyber state:
+{
+  "user_pc": {
+    "compromised": false,
+    "privilege": "user",
+    "latency": 50
+  }
+}
+Control state:
+{
+  "sensor_1": {
+    "value": 40,
+    "target": 70,
+    "delay": 0
+  }
+}
+
+3. vulnerability and capability data: "what can happen"
+Vulnerabilities:
+{
+  "server_a": [
+    {"type": "ssh_bruteforce", "success_prob": 0.6},
+    {"type": "rce", "success_prob": 0.3}
+  ]
+}
+Attack capabilities:
+{
+  "attacker": {
+    "skills": ["phishing", "lateral_movement"]
+  }
+}
+
+4. event/action data: "what happens over time"
+{
+  "time": 5,
+  "action": "phish",
+  "target": "user_pc",
+  "result": "success"
+}
+builds timeline of system evolution
+
+5. control system–specific data: "CPS layer", Add this on top.
+Sensor data:
+{
+  "sensor_1": {
+    "true_value": 50,
+    "reported_value": 50
+  }
+}
+Controller config:
+{
+  "controller_1": {
+    "target": 70,
+    "gain": 0.5
+  }
+}
+Actuator state:
+{
+  "actuator_1": {
+    "status": "ON",
+    "effect": "increase_temperature"
+  }
+}
+
+6. network behavior data
+NO NEED OF PACKET LEVEL DATA 
+Just simulate:
+{
+  "link": {
+    "latency": 100,
+    "bandwidth": 10,
+    "packet_loss": 0.1
+  }
+}
+
+NOTE: NO REAL WORLD DATA FOR MVP.. use synthetic data initially 
+
+sources:
+logs (SIEM)
+cloud APIs
+IoT telemetry
+
+MUST HAVE RN
+1. Graph
+	nodes + edges
+2. Node state
+	compromised / not
+	privilege level
+3. Attack rules
+	how attacker moves
+4. Simulation loop
+	time steps
+OPTIONAL (add later):
+latency
+control system
+probabilities
+
+STORAGE FOR MVP:
+Python dict / JSON
+or simple Postgres
+LATER:
+Graph DB (Neo4j)
+Time-series DB (for metrics)
