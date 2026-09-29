@@ -3,10 +3,12 @@
 > **What happens to the system after a successful attack?**
 
 *To install the project:*
+
 ```bash
 git clone https://github.com/Anushree401/DT-CyberTwin
 ```
-then, refer to [INIT.txt](init.txt)
+
+then, refer to [INIT.txt](INIT.txt)
 
 Traditional cybersecurity validation can tell us whether an attack path is possible, whether a vulnerability can be exploited, or whether security controls can stop an attacker.
 
@@ -526,23 +528,23 @@ flowchart TB
 
 ## Current MVP
 
-| Layer           | Technology                  | Purpose                                |
-| --------------- | --------------------------- | -------------------------------------- |
-| Language        | Python 3.12+                | Backend + simulation                   |
-| API             | FastAPI                     | Backend API                            |
-| Validation      | Pydantic v2                 | State/event/scenario models            |
-| Graph           | NetworkX                    | Digital twin dependency graph          |
-| State           | Custom state engine         | Time-evolving system state             |
-| CPS             | Custom Python models        | Sensor/controller/actuator/process     |
-| Dynamics        | Custom discrete-time models | Physical/process evolution             |
-| Simulation      | Custom simulation engine    | Main simulation loop                   |
-| Attack Modeling | Rule-based engine           | Attack actions and transitions         |
+| Layer           | Technology                  | Purpose                                  |
+| --------------- | --------------------------- | ---------------------------------------- |
+| Language        | Python 3.12+                | Backend + simulation                     |
+| API             | FastAPI                     | Backend API                              |
+| Validation      | Pydantic v2                 | State/event/scenario models              |
+| Graph           | NetworkX                    | Digital twin dependency graph            |
+| State           | Custom state engine         | Time-evolving system state               |
+| CPS             | Custom Python models        | Sensor/controller/actuator/process       |
+| Dynamics        | Custom discrete-time models | Physical/process evolution               |
+| Simulation      | Custom simulation engine    | Main simulation loop                     |
+| Attack Modeling | Rule-based engine           | Attack actions and transitions           |
 | Impact          | Custom propagation engine   | Cyber → operational → physical effects |
-| Replay          | Event/state history         | Causal replay                          |
-| Storage         | JSON                        | Initial scenarios and state            |
-| Testing         | pytest                      | Unit/integration testing               |
-| Environment     | uv / venv                   | Python environment                     |
-| Version Control | Git / GitHub                | Source control                         |
+| Replay          | Event/state history         | Causal replay                            |
+| Storage         | JSON                        | Initial scenarios and state              |
+| Testing         | pytest                      | Unit/integration testing                 |
+| Environment     | uv / venv                   | Python environment                       |
+| Version Control | Git / GitHub                | Source control                           |
 
 ## Planned Infrastructure
 
