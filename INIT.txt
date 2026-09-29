@@ -1,0 +1,15 @@
+if using linux:
+
+create virtual environment
+virtualenv ~/dt_cyber_venv
+source ~/dt_cyber_venv/bin/activate
+
+install dependancies
+python -m pip install --upgrade pip
+pip install -e ".[dev]"
+
+verify installations
+python --version
+pip --version
+pytest --version
+python -c "import fastapi, pydantic, networkx; print('DT-CyberTwin dependencies OK')"

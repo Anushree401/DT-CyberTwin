@@ -2,6 +2,12 @@
 
 > **What happens to the system after a successful attack?**
 
+*To install the project:*
+```bash
+git clone https://github.com/Anushree401/DT-CyberTwin
+```
+then, refer to [INIT.txt](init.txt)
+
 Traditional cybersecurity validation can tell us whether an attack path is possible, whether a vulnerability can be exploited, or whether security controls can stop an attacker.
 
 But it often stops at:
