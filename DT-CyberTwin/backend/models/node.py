@@ -15,7 +15,7 @@ class NodeType(str,Enum):
 
 class NodeState(BaseModel):
     compromised:bool = False 
-    priviledge:str = "none"
+    privilege:str = "none"
     status:str = "normal"
 
 class Node(BaseModel):
