@@ -1,0 +1,72 @@
+MAIN STACK RIGHT NOW
+
+LANGUAGE
+- Python 3.12+ — simulation engine + backend
+
+API
+- FastAPI — backend API
+
+VALIDATION / MODELS
+- Pydantic v2 — state, event, scenario, and API models
+
+DIGITAL TWIN
+- NetworkX — cyber + physical dependency graph
+- Custom state engine — persistent time-evolving twin state
+
+CPS MODEL
+- Custom Python CPS models — sensor → controller → actuator → physical process
+- Custom dynamics — discrete-time physical/process behavior
+
+SIMULATION
+- Custom discrete-time simulation engine — state evolution + CPS feedback loop
+- Event scheduler — timestamped attacks, system events, and state transitions
+
+ATTACK MODELING
+- Rule-based attack engine — attack actions and state transitions
+
+IMPACT
+- Custom impact propagation engine — compromise → dependency effects → operational/physical consequences
+- Metrics engine — degradation, instability, recovery, and impact measurements
+
+REPLAY
+- Event/state history — causal timeline and simulation replay
+
+STORAGE
+- JSON — synthetic scenarios, configurations, and initial state
+
+TESTING
+- pytest — unit + integration tests
+
+ENVIRONMENT
+- uv or venv — Python environment
+
+VERSION CONTROL
+- Git / GitHub — source control
+
+LATER
+
+DATABASE
+- PostgreSQL — persistent application/scenario data
+
+GRAPH DATABASE
+- Neo4j — large-scale dependency and topology graphs
+
+TIME-SERIES
+- TimescaleDB — telemetry and simulation time-series data
+
+REAL-TIME STATE
+- Redis — live simulation state / pub-sub
+
+FRONTEND
+- Next.js — web dashboard
+- React Flow — interactive digital-twin graph
+- Recharts — telemetry and impact visualization
+
+REAL-TIME COMMUNICATION
+- WebSockets — live simulation updates
+
+INTELLIGENT AGENTS
+- Agent framework / RL — adaptive attacker, defender, and environment agents
+
+ML
+- anomaly detection / probabilistic models — adaptive system behavior
