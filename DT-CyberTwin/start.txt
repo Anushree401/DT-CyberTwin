@@ -1,0 +1,7 @@
+source ~/dt_venv/bin/activate in 2 terminals
+
+cd frontend
+node node_modules/vite/bin/vite.js
+
+in root
+uvicorn main:app --app-dir backend --reload
