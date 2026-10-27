@@ -1,0 +1,1565 @@
+DT-CyberTwin API smoke tests
+Base URL: http://127.0.0.1:8000
+Make sure the API is running in another terminal.
+
+============================================================
+TEST: Health endpoint
+GET http://127.0.0.1:8000/health
+HTTP STATUS: 200
+RESPONSE:
+{
+   "service" : "dt-cybertwin",
+   "status" : "ok"
+}
+RESULT: PASS (HTTP 2xx)
+
+============================================================
+TEST: Digital twin graph endpoint
+GET http://127.0.0.1:8000/twin
+HTTP STATUS: 200
+RESPONSE:
+{
+   "edges" : [
+      {
+         "metadata" : {},
+         "source" : "operator-01",
+         "target" : "workstation-01",
+         "type" : "network"
+      },
+      {
+         "metadata" : {},
+         "source" : "workstation-01",
+         "target" : "gateway-01",
+         "type" : "network"
+      },
+      {
+         "metadata" : {},
+         "source" : "gateway-01",
+         "target" : "plc-01",
+         "type" : "network"
+      },
+      {
+         "metadata" : {},
+         "source" : "plc-01",
+         "target" : "controller-01",
+         "type" : "control"
+      },
+      {
+         "metadata" : {},
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "type" : "data"
+      },
+      {
+         "metadata" : {},
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "type" : "control"
+      },
+      {
+         "metadata" : {},
+         "source" : "actuator-01",
+         "target" : "process-01",
+         "type" : "control"
+      },
+      {
+         "metadata" : {},
+         "source" : "process-01",
+         "target" : "sensor-01",
+         "type" : "data"
+      }
+   ],
+   "nodes" : [
+      {
+         "id" : "operator-01",
+         "metadata" : {},
+         "name" : "Operator",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "user"
+      },
+      {
+         "id" : "workstation-01",
+         "metadata" : {},
+         "name" : "Operator Workstation",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "workstation"
+      },
+      {
+         "id" : "gateway-01",
+         "metadata" : {},
+         "name" : "Industrial Gateway",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "gateway"
+      },
+      {
+         "id" : "plc-01",
+         "metadata" : {},
+         "name" : "Main PLC",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "plc"
+      },
+      {
+         "id" : "sensor-01",
+         "metadata" : {},
+         "name" : "Temperature Sensor",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "sensor"
+      },
+      {
+         "id" : "controller-01",
+         "metadata" : {},
+         "name" : "Temperature Controller",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "controller"
+      },
+      {
+         "id" : "actuator-01",
+         "metadata" : {},
+         "name" : "Heater Actuator",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "actuator"
+      },
+      {
+         "id" : "process-01",
+         "metadata" : {},
+         "name" : "Temperature Process",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "physical_process"
+      }
+   ]
+}
+RESULT: PASS (HTTP 2xx)
+
+============================================================
+TEST: Baseline industrial-temperature simulation
+POST http://127.0.0.1:8000/simulations/industrial-temperature
+REQUEST:
+{
+   "attack" : false,
+   "initial_temperature" : 25,
+   "setpoint" : 40,
+   "steps" : 12
+}
+HTTP STATUS: 200
+RESPONSE:
+{
+   "final_state" : {
+      "actuator-01" : {
+         "id" : "actuator-01",
+         "metadata" : {
+            "output" : 0,
+            "status" : "off"
+         },
+         "name" : "Heater Actuator",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "actuator"
+      },
+      "controller-01" : {
+         "id" : "controller-01",
+         "metadata" : {
+            "decision_reason" : "temperature_above_setpoint",
+            "heater_output" : 0,
+            "last_updated_timestep" : 11
+         },
+         "name" : "Temperature Controller",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "controller"
+      },
+      "gateway-01" : {
+         "id" : "gateway-01",
+         "metadata" : {},
+         "name" : "Industrial Gateway",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "gateway"
+      },
+      "operator-01" : {
+         "id" : "operator-01",
+         "metadata" : {},
+         "name" : "Operator",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "user"
+      },
+      "plc-01" : {
+         "id" : "plc-01",
+         "metadata" : {},
+         "name" : "Main PLC",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "plc"
+      },
+      "process-01" : {
+         "id" : "process-01",
+         "metadata" : {
+            "temperature" : 43.496
+         },
+         "name" : "Temperature Process",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "physical_process"
+      },
+      "sensor-01" : {
+         "id" : "sensor-01",
+         "metadata" : {
+            "actual_temperature" : 43.496,
+            "last_updated_timestep" : 11,
+            "reported_temperature" : 45.104
+         },
+         "name" : "Temperature Sensor",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "sensor"
+      },
+      "workstation-01" : {
+         "id" : "workstation-01",
+         "metadata" : {},
+         "name" : "Operator Workstation",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "workstation"
+      }
+   },
+   "impacts" : [],
+   "metrics" : {
+      "impact_score" : 0,
+      "maximum_setpoint_deviation" : 7,
+      "overheat_steps" : 0,
+      "peak_temperature" : 45.104,
+      "safe" : true,
+      "sample_count" : 12
+   },
+   "scenario" : "industrial_temperature_control",
+   "timeline" : [
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 33,
+            "reported_temperature" : 25,
+            "spoofed" : false
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 0,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 1,
+            "reason" : "temperature_below_setpoint",
+            "reported_temperature" : 25
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 0,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 33
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 0,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 40.36,
+            "reported_temperature" : 33,
+            "spoofed" : false
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 1,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 1,
+            "reason" : "temperature_below_setpoint",
+            "reported_temperature" : 33
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 1,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 40.36
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 1,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 39.131,
+            "reported_temperature" : 40.36,
+            "spoofed" : false
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 2,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 0,
+            "reason" : "temperature_within_deadband",
+            "reported_temperature" : 40.36
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 2,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 39.131
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 2,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 38.001,
+            "reported_temperature" : 39.131,
+            "spoofed" : false
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 3,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 0,
+            "reason" : "temperature_within_deadband",
+            "reported_temperature" : 39.131
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 3,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 38.001
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 3,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 44.961,
+            "reported_temperature" : 38.001,
+            "spoofed" : false
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 4,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 1,
+            "reason" : "temperature_below_setpoint",
+            "reported_temperature" : 38.001
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 4,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 44.961
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 4,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 43.364,
+            "reported_temperature" : 44.961,
+            "spoofed" : false
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 5,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 0,
+            "reason" : "temperature_above_setpoint",
+            "reported_temperature" : 44.961
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 5,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 43.364
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 5,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 41.895,
+            "reported_temperature" : 43.364,
+            "spoofed" : false
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 6,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 0,
+            "reason" : "temperature_above_setpoint",
+            "reported_temperature" : 43.364
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 6,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 41.895
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 6,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 40.543,
+            "reported_temperature" : 41.895,
+            "spoofed" : false
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 7,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 0,
+            "reason" : "temperature_above_setpoint",
+            "reported_temperature" : 41.895
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 7,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 40.543
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 7,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 39.3,
+            "reported_temperature" : 40.543,
+            "spoofed" : false
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 8,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 0,
+            "reason" : "temperature_within_deadband",
+            "reported_temperature" : 40.543
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 8,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 39.3
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 8,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 38.156,
+            "reported_temperature" : 39.3,
+            "spoofed" : false
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 9,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 0,
+            "reason" : "temperature_within_deadband",
+            "reported_temperature" : 39.3
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 9,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 38.156
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 9,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 45.104,
+            "reported_temperature" : 38.156,
+            "spoofed" : false
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 10,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 1,
+            "reason" : "temperature_below_setpoint",
+            "reported_temperature" : 38.156
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 10,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 45.104
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 10,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 43.496,
+            "reported_temperature" : 45.104,
+            "spoofed" : false
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 11,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 0,
+            "reason" : "temperature_above_setpoint",
+            "reported_temperature" : 45.104
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 11,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 43.496
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 11,
+         "type" : "system"
+      }
+   ],
+   "timesteps" : [
+      {
+         "actual_temperature" : 33,
+         "actuator_status" : "on",
+         "decision_reason" : "temperature_below_setpoint",
+         "heater_output" : 1,
+         "reported_temperature" : 25,
+         "sensor_compromised" : false,
+         "timestep" : 0
+      },
+      {
+         "actual_temperature" : 40.36,
+         "actuator_status" : "on",
+         "decision_reason" : "temperature_below_setpoint",
+         "heater_output" : 1,
+         "reported_temperature" : 33,
+         "sensor_compromised" : false,
+         "timestep" : 1
+      },
+      {
+         "actual_temperature" : 39.131,
+         "actuator_status" : "off",
+         "decision_reason" : "temperature_within_deadband",
+         "heater_output" : 0,
+         "reported_temperature" : 40.36,
+         "sensor_compromised" : false,
+         "timestep" : 2
+      },
+      {
+         "actual_temperature" : 38.001,
+         "actuator_status" : "off",
+         "decision_reason" : "temperature_within_deadband",
+         "heater_output" : 0,
+         "reported_temperature" : 39.131,
+         "sensor_compromised" : false,
+         "timestep" : 3
+      },
+      {
+         "actual_temperature" : 44.961,
+         "actuator_status" : "on",
+         "decision_reason" : "temperature_below_setpoint",
+         "heater_output" : 1,
+         "reported_temperature" : 38.001,
+         "sensor_compromised" : false,
+         "timestep" : 4
+      },
+      {
+         "actual_temperature" : 43.364,
+         "actuator_status" : "off",
+         "decision_reason" : "temperature_above_setpoint",
+         "heater_output" : 0,
+         "reported_temperature" : 44.961,
+         "sensor_compromised" : false,
+         "timestep" : 5
+      },
+      {
+         "actual_temperature" : 41.895,
+         "actuator_status" : "off",
+         "decision_reason" : "temperature_above_setpoint",
+         "heater_output" : 0,
+         "reported_temperature" : 43.364,
+         "sensor_compromised" : false,
+         "timestep" : 6
+      },
+      {
+         "actual_temperature" : 40.543,
+         "actuator_status" : "off",
+         "decision_reason" : "temperature_above_setpoint",
+         "heater_output" : 0,
+         "reported_temperature" : 41.895,
+         "sensor_compromised" : false,
+         "timestep" : 7
+      },
+      {
+         "actual_temperature" : 39.3,
+         "actuator_status" : "off",
+         "decision_reason" : "temperature_within_deadband",
+         "heater_output" : 0,
+         "reported_temperature" : 40.543,
+         "sensor_compromised" : false,
+         "timestep" : 8
+      },
+      {
+         "actual_temperature" : 38.156,
+         "actuator_status" : "off",
+         "decision_reason" : "temperature_within_deadband",
+         "heater_output" : 0,
+         "reported_temperature" : 39.3,
+         "sensor_compromised" : false,
+         "timestep" : 9
+      },
+      {
+         "actual_temperature" : 45.104,
+         "actuator_status" : "on",
+         "decision_reason" : "temperature_below_setpoint",
+         "heater_output" : 1,
+         "reported_temperature" : 38.156,
+         "sensor_compromised" : false,
+         "timestep" : 10
+      },
+      {
+         "actual_temperature" : 43.496,
+         "actuator_status" : "off",
+         "decision_reason" : "temperature_above_setpoint",
+         "heater_output" : 0,
+         "reported_temperature" : 45.104,
+         "sensor_compromised" : false,
+         "timestep" : 11
+      }
+   ]
+}
+RESULT: PASS (expected HTTP 200)
+
+============================================================
+TEST: Sensor-spoofing attack simulation
+POST http://127.0.0.1:8000/simulations/industrial-temperature
+REQUEST:
+{
+   "attack" : true,
+   "attack_timestep" : 2,
+   "initial_temperature" : 25,
+   "setpoint" : 40,
+   "spoof_offset" : -30,
+   "steps" : 12
+}
+HTTP STATUS: 200
+RESPONSE:
+{
+   "final_state" : {
+      "actuator-01" : {
+         "id" : "actuator-01",
+         "metadata" : {
+            "output" : 0,
+            "status" : "off"
+         },
+         "name" : "Heater Actuator",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "actuator"
+      },
+      "controller-01" : {
+         "id" : "controller-01",
+         "metadata" : {
+            "decision_reason" : "temperature_above_setpoint",
+            "heater_output" : 0,
+            "last_updated_timestep" : 11
+         },
+         "name" : "Temperature Controller",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "controller"
+      },
+      "gateway-01" : {
+         "id" : "gateway-01",
+         "metadata" : {},
+         "name" : "Industrial Gateway",
+         "state" : {
+            "compromised" : true,
+            "privilege" : "admin",
+            "status" : "compromised"
+         },
+         "type" : "gateway"
+      },
+      "operator-01" : {
+         "id" : "operator-01",
+         "metadata" : {},
+         "name" : "Operator",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "user"
+      },
+      "plc-01" : {
+         "id" : "plc-01",
+         "metadata" : {},
+         "name" : "Main PLC",
+         "state" : {
+            "compromised" : true,
+            "privilege" : "control",
+            "status" : "compromised"
+         },
+         "type" : "plc"
+      },
+      "process-01" : {
+         "id" : "process-01",
+         "metadata" : {
+            "temperature" : 67.732
+         },
+         "name" : "Temperature Process",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "physical_process"
+      },
+      "sensor-01" : {
+         "id" : "sensor-01",
+         "metadata" : {
+            "actual_temperature" : 67.732,
+            "last_updated_timestep" : 11,
+            "reported_temperature" : 41.448,
+            "sensor_spoof_active" : true,
+            "spoof_offset" : -30
+         },
+         "name" : "Temperature Sensor",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "sensor"
+      },
+      "workstation-01" : {
+         "id" : "workstation-01",
+         "metadata" : {},
+         "name" : "Operator Workstation",
+         "state" : {
+            "compromised" : false,
+            "privilege" : "none",
+            "status" : "normal"
+         },
+         "type" : "workstation"
+      }
+   },
+   "impacts" : [
+      {
+         "actual_temperature" : 70.425,
+         "cause" : "heater remained active while reported sensor temperature was below setpoint",
+         "description" : "Temperature exceeded the safe operating limit.",
+         "severity" : "high",
+         "timestep" : 8
+      },
+      {
+         "actual_temperature" : 71.448,
+         "cause" : "heater remained active while reported sensor temperature was below setpoint",
+         "description" : "Temperature exceeded the safe operating limit.",
+         "severity" : "high",
+         "timestep" : 10
+      }
+   ],
+   "metrics" : {
+      "impact_score" : 3.75,
+      "maximum_setpoint_deviation" : 31.448,
+      "overheat_steps" : 2,
+      "peak_temperature" : 71.448,
+      "safe" : false,
+      "sample_count" : 12
+   },
+   "scenario" : "industrial_temperature_control",
+   "timeline" : [
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 33,
+            "reported_temperature" : 25,
+            "spoofed" : false
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 0,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 1,
+            "reason" : "temperature_below_setpoint",
+            "reported_temperature" : 25
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 0,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 33
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 0,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 40.36,
+            "reported_temperature" : 33,
+            "spoofed" : false
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 1,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 1,
+            "reason" : "temperature_below_setpoint",
+            "reported_temperature" : 33
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 1,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 40.36
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 1,
+         "type" : "system"
+      },
+      {
+         "action" : "simulated_compromise",
+         "parameters" : {
+            "new_state" : {
+               "compromised" : true,
+               "privilege" : "admin",
+               "status" : "compromised"
+            },
+            "previous_state" : {
+               "compromised" : false,
+               "privilege" : "none",
+               "status" : "normal"
+            }
+         },
+         "source" : "simulated_attack",
+         "target" : "gateway-01",
+         "timestep" : 2,
+         "type" : "state_change"
+      },
+      {
+         "action" : "simulated_compromise",
+         "parameters" : {
+            "new_state" : {
+               "compromised" : true,
+               "privilege" : "control",
+               "status" : "compromised"
+            },
+            "previous_state" : {
+               "compromised" : false,
+               "privilege" : "none",
+               "status" : "normal"
+            }
+         },
+         "source" : "simulated_attack",
+         "target" : "plc-01",
+         "timestep" : 2,
+         "type" : "state_change"
+      },
+      {
+         "action" : "sensor_spoofing_started",
+         "parameters" : {
+            "offset" : -30,
+            "unit" : "temperature_units"
+         },
+         "source" : "simulated_attack",
+         "target" : "sensor-01",
+         "timestep" : 2,
+         "type" : "attack"
+      },
+      {
+         "action" : "attack_path_compromised",
+         "parameters" : {
+            "path" : [
+               "workstation-01",
+               "gateway-01",
+               "plc-01"
+            ]
+         },
+         "source" : "simulated_attack",
+         "target" : "gateway-01",
+         "timestep" : 2,
+         "type" : "attack"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 47.131,
+            "reported_temperature" : 10.36,
+            "spoofed" : true
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 2,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 1,
+            "reason" : "temperature_below_setpoint",
+            "reported_temperature" : 10.36
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 2,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 47.131
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 2,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 53.361,
+            "reported_temperature" : 17.131,
+            "spoofed" : true
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 3,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 1,
+            "reason" : "temperature_below_setpoint",
+            "reported_temperature" : 17.131
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 3,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 53.361
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 3,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 59.092,
+            "reported_temperature" : 23.361,
+            "spoofed" : true
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 4,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 1,
+            "reason" : "temperature_below_setpoint",
+            "reported_temperature" : 23.361
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 4,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 59.092
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 4,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 64.365,
+            "reported_temperature" : 29.092,
+            "spoofed" : true
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 5,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 1,
+            "reason" : "temperature_below_setpoint",
+            "reported_temperature" : 29.092
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 5,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 64.365
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 5,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 69.216,
+            "reported_temperature" : 34.365,
+            "spoofed" : true
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 6,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 1,
+            "reason" : "temperature_below_setpoint",
+            "reported_temperature" : 34.365
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 6,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 69.216
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 6,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 65.679,
+            "reported_temperature" : 39.216,
+            "spoofed" : true
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 7,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 0,
+            "reason" : "temperature_within_deadband",
+            "reported_temperature" : 39.216
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 7,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 65.679
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 7,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 70.425,
+            "reported_temperature" : 35.679,
+            "spoofed" : true
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 8,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 1,
+            "reason" : "temperature_below_setpoint",
+            "reported_temperature" : 35.679
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 8,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 70.425
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 8,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 66.791,
+            "reported_temperature" : 40.425,
+            "spoofed" : true
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 9,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 0,
+            "reason" : "temperature_within_deadband",
+            "reported_temperature" : 40.425
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 9,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 66.791
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 9,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 71.448,
+            "reported_temperature" : 36.791,
+            "spoofed" : true
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 10,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 1,
+            "reason" : "temperature_below_setpoint",
+            "reported_temperature" : 36.791
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 10,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 71.448
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 10,
+         "type" : "system"
+      },
+      {
+         "action" : "temperature_reading",
+         "parameters" : {
+            "actual_temperature" : 67.732,
+            "reported_temperature" : 41.448,
+            "spoofed" : true
+         },
+         "source" : "sensor-01",
+         "target" : "controller-01",
+         "timestep" : 11,
+         "type" : "sensor_update"
+      },
+      {
+         "action" : "heater_control_decision",
+         "parameters" : {
+            "heater_output" : 0,
+            "reason" : "temperature_above_setpoint",
+            "reported_temperature" : 41.448
+         },
+         "source" : "controller-01",
+         "target" : "actuator-01",
+         "timestep" : 11,
+         "type" : "control_action"
+      },
+      {
+         "action" : "temperature_advanced",
+         "parameters" : {
+            "actual_temperature" : 67.732
+         },
+         "source" : "process-01",
+         "target" : null,
+         "timestep" : 11,
+         "type" : "system"
+      }
+   ],
+   "timesteps" : [
+      {
+         "actual_temperature" : 33,
+         "actuator_status" : "on",
+         "decision_reason" : "temperature_below_setpoint",
+         "heater_output" : 1,
+         "reported_temperature" : 25,
+         "sensor_compromised" : false,
+         "timestep" : 0
+      },
+      {
+         "actual_temperature" : 40.36,
+         "actuator_status" : "on",
+         "decision_reason" : "temperature_below_setpoint",
+         "heater_output" : 1,
+         "reported_temperature" : 33,
+         "sensor_compromised" : false,
+         "timestep" : 1
+      },
+      {
+         "actual_temperature" : 47.131,
+         "actuator_status" : "on",
+         "decision_reason" : "temperature_below_setpoint",
+         "heater_output" : 1,
+         "reported_temperature" : 10.36,
+         "sensor_compromised" : true,
+         "timestep" : 2
+      },
+      {
+         "actual_temperature" : 53.361,
+         "actuator_status" : "on",
+         "decision_reason" : "temperature_below_setpoint",
+         "heater_output" : 1,
+         "reported_temperature" : 17.131,
+         "sensor_compromised" : true,
+         "timestep" : 3
+      },
+      {
+         "actual_temperature" : 59.092,
+         "actuator_status" : "on",
+         "decision_reason" : "temperature_below_setpoint",
+         "heater_output" : 1,
+         "reported_temperature" : 23.361,
+         "sensor_compromised" : true,
+         "timestep" : 4
+      },
+      {
+         "actual_temperature" : 64.365,
+         "actuator_status" : "on",
+         "decision_reason" : "temperature_below_setpoint",
+         "heater_output" : 1,
+         "reported_temperature" : 29.092,
+         "sensor_compromised" : true,
+         "timestep" : 5
+      },
+      {
+         "actual_temperature" : 69.216,
+         "actuator_status" : "on",
+         "decision_reason" : "temperature_below_setpoint",
+         "heater_output" : 1,
+         "reported_temperature" : 34.365,
+         "sensor_compromised" : true,
+         "timestep" : 6
+      },
+      {
+         "actual_temperature" : 65.679,
+         "actuator_status" : "off",
+         "decision_reason" : "temperature_within_deadband",
+         "heater_output" : 0,
+         "reported_temperature" : 39.216,
+         "sensor_compromised" : true,
+         "timestep" : 7
+      },
+      {
+         "actual_temperature" : 70.425,
+         "actuator_status" : "on",
+         "decision_reason" : "temperature_below_setpoint",
+         "heater_output" : 1,
+         "reported_temperature" : 35.679,
+         "sensor_compromised" : true,
+         "timestep" : 8
+      },
+      {
+         "actual_temperature" : 66.791,
+         "actuator_status" : "off",
+         "decision_reason" : "temperature_within_deadband",
+         "heater_output" : 0,
+         "reported_temperature" : 40.425,
+         "sensor_compromised" : true,
+         "timestep" : 9
+      },
+      {
+         "actual_temperature" : 71.448,
+         "actuator_status" : "on",
+         "decision_reason" : "temperature_below_setpoint",
+         "heater_output" : 1,
+         "reported_temperature" : 36.791,
+         "sensor_compromised" : true,
+         "timestep" : 10
+      },
+      {
+         "actual_temperature" : 67.732,
+         "actuator_status" : "off",
+         "decision_reason" : "temperature_above_setpoint",
+         "heater_output" : 0,
+         "reported_temperature" : 41.448,
+         "sensor_compromised" : true,
+         "timestep" : 11
+      }
+   ]
+}
+RESULT: PASS (expected HTTP 200)
+
+============================================================
+TEST: Invalid attack timestep validation
+POST http://127.0.0.1:8000/simulations/industrial-temperature
+REQUEST:
+{
+   "attack" : true,
+   "attack_timestep" : 9,
+   "initial_temperature" : 25,
+   "setpoint" : 40,
+   "spoof_offset" : -30,
+   "steps" : 3
+}
+HTTP STATUS: 422
+RESPONSE:
+{
+   "detail" : "attack_timestep must be less than steps when attack is enabled"
+}
+RESULT: PASS (expected HTTP 422)
+
+============================================================
+SUMMARY: 5 passed, 0 failed

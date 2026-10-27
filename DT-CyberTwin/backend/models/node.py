@@ -11,7 +11,7 @@ class NodeType(str,Enum):
     SENSOR = "sensor"
     CONTROLLER = "controller"
     ACTUATOR = "actuator"
-    PHYSICAL_PROCESS = "physcial_process"
+    PHYSICAL_PROCESS = "physical_process"
 
 class NodeState(BaseModel):
     compromised:bool = False 

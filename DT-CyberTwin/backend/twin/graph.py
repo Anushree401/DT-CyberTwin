@@ -10,6 +10,7 @@ class DigitalTwinGraph:
             node.id,
             data=node,
         )
+        return node
     def add_edge(self,edge:Edge) -> None:
         if edge.source not in self.graph:
             raise KeyError(f"Source node '{edge.source}' does not exist")
